@@ -15,11 +15,12 @@ http.route({
     }
 
     //check headers
-    const svix_id = request.headers.get("svix_id");
-    const svix_signature = request.headers.get("svix_signature");
-    const svix_timestamp = request.headers.get("svix-svix_timestamp");
+    const svix_id = request.headers.get("svix-id");
+    const svix_signature = request.headers.get("svix-signature");
+    const svix_timestamp = request.headers.get("svix-timestamp");
 
-    if (!svix_id || svix_signature || svix_timestamp) {
+    // console.log(svix_id, svix_signature, svix_timestamp);
+    if (!svix_id || !svix_signature || !svix_timestamp) {
       return new Response("Error occured -- no svix headers", {
         status: 400,
       });
@@ -46,11 +47,13 @@ http.route({
 
     const eventType = event.type;
     if (eventType === "user.created") {
-      const { id, email_addresses, first_name, last_name, image_url } = event.data;
-      const email = email_addresses[0].email_addresses;
+      const { id, email_addresses, first_name, last_name, image_url } =
+        event.data;
+      const email = email_addresses[0].email_address;
       const name = `${first_name || ""} ${last_name || ""}`.trim();
 
       try {
+        // console.log(email, email_addresses, "email");
         await ctx.runMutation(api.users.createUser, {
           email,
           fullname: name,
@@ -67,6 +70,5 @@ http.route({
     return new Response("Webhook processed successfully", { status: 200 });
   }),
 });
-
 
 export default http;
