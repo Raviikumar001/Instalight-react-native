@@ -3,12 +3,10 @@ import { tokenCache } from "@/cache";
 import { ConvexProviderWithClerk } from "convex/react-clerk";
 import { ConvexReactClient } from "convex/react";
 
-const convex = new ConvexReactClient(
-  process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!,
-  {
-    unsavedChangesWarning: false,
-  },
-);
+console.log(process.env.EXPO_PUBLIC_CONVEX_URL);
+const convex = new ConvexReactClient(process.env.EXPO_PUBLIC_CONVEX_URL!, {
+  unsavedChangesWarning: false,
+});
 
 const publishablekey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
 if (!publishablekey) {
