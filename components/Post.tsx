@@ -4,9 +4,27 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { Image } from "expo-image";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "@/constants/theme";
+import { Id } from "@/convex/_generated/dataModel";
 
-//implement todo type
-export default function Post({ post }: { post: any }) {
+type PostProps = {
+  post: {
+    _id: Id<"posts">;
+    imageUrl: string;
+    caption?: string;
+    likes: number;
+    comments: number;
+    _creationTime: number;
+    isLIked: boolean;
+    isBookmarked: boolean;
+    author: {
+      _id: string;
+      username: string;
+      image: string;
+    };
+  };
+};
+
+export default function Post({ post }: PostProps) {
   return (
     <View style={styles.post}>
       <View style={styles.postHeader}>
@@ -76,9 +94,7 @@ export default function Post({ post }: { post: any }) {
         <TouchableOpacity>
           <Text style={styles.commentText}>View all 2 comments</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
-          <Text style={styles.commentText}>View all 2 comments</Text>
-        </TouchableOpacity>
+
         <Text style={styles.timeAgo}>2hours ago</Text>
       </View>
     </View>
