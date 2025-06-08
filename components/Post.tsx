@@ -17,7 +17,7 @@ type PostProps = {
     likes: number;
     comments: number;
     _creationTime: number;
-    isLIked: boolean;
+    isLiked: boolean;
     isBookmarked: boolean;
     author: {
       _id: string;
@@ -44,7 +44,6 @@ export default function Post({ post }: PostProps) {
     }
   };
 
-  console.log(isLiked, "isliked", post);
   return (
     <View style={styles.post}>
       <View style={styles.postHeader}>
