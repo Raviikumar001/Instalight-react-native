@@ -59,7 +59,7 @@ export default function CommentsModal({
       onRequestClose={onClose}
     >
       <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" && "android" ? "padding" : "height"}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.modalContainer}
       >
         <View style={styles.modalHeader}>
@@ -74,12 +74,14 @@ export default function CommentsModal({
         {comments === undefined ? (
           <Loader />
         ) : (
-          <FlatList
-            data={comments}
-            keyExtractor={(item) => item._id}
-            renderItem={({ item }) => <Comment comment={item} />}
-            contentContainerStyle={styles.commentsList}
-          />
+          <View style={{ flex: 1 }}>
+            <FlatList
+              data={comments}
+              keyExtractor={(item) => item._id}
+              renderItem={({ item }) => <Comment comment={item} />}
+              contentContainerStyle={styles.commentsList}
+            />
+          </View>
         )}
         <View style={styles.commentInput}>
           <TextInput
