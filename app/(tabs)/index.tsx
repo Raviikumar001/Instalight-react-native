@@ -68,7 +68,7 @@ const NoPostsFound = () => {
         flex: 1,
         backgroundColor: COLORS.background,
         justifyContent: "center",
-        alignContent: "center",
+        alignItems: "center",
       }}
     >
       <Text style={{ fontSize: 20, color: COLORS.primary }}>No posts yet</Text>

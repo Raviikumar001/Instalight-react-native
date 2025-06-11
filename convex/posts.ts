@@ -123,7 +123,7 @@ export const toggleLike = mutation({
   },
 });
 
-export const deltePost = mutation({
+export const deletePost = mutation({
   args: { postId: v.id("posts") },
 
   handler: async (ctx, args) => {
