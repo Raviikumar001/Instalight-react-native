@@ -1,4 +1,11 @@
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  FlatList,
+  Modal,
+} from "react-native";
 import { api } from "@/convex/_generated/api";
 import { useAuth } from "@clerk/clerk-expo";
 import { useMutation, useQuery } from "convex/react";
@@ -90,7 +97,70 @@ export default function Profile() {
             </TouchableOpacity>
           </View>
         </View>
+
+        {posts?.length === 0 && <NoPostsFound />}
+        <FlatList
+          data={posts}
+          numColumns={3}
+          scrollEnabled={false}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              style={styles.gridItem}
+              onPress={() => setSelectedPost(item)}
+            >
+              <Image
+                source={item.imageUrl}
+                style={styles.gridImage}
+                contentFit="cover"
+                transition={200}
+              />
+            </TouchableOpacity>
+          )}
+        />
       </ScrollView>
+
+      {/* EDIT PROFILE MODAL */}
+      {/* SELECTED IMAGE MODAL */}
+      <Modal
+        visible={!!selectedPost}
+        animationType="fade"
+        transparent={true}
+        onRequestClose={() => setSelectedPost(null)}
+      >
+        <View style={styles.modalBackdrop}>
+          {selectedPost && (
+            <View style={styles.postDetailContainer}>
+              <View style={styles.postDetailHeader}>
+                <TouchableOpacity onPress={() => setSelectedPost(null)}>
+                  <Ionicons name="close" size={24} color={COLORS.white} />
+                </TouchableOpacity>
+              </View>
+
+              <Image
+                source={selectedPost.imageUrl}
+                cachePolicy={"memory-disk"}
+                style={styles.postDetailImage}
+              />
+            </View>
+          )}
+        </View>
+      </Modal>
+    </View>
+  );
+}
+
+function NoPostsFound() {
+  return (
+    <View
+      style={{
+        height: "100%",
+        backgroundColor: COLORS.background,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Ionicons name="image-outline" size={48} color={COLORS.primary} />
+      <Text style={{ fontSize: 20, color: COLORS.white }}>No posts yet</Text>
     </View>
   );
 }
